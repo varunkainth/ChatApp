@@ -60,6 +60,7 @@ export const signup = async (req, res) => {
       profilePic: profilePicUrl, // Assign profile pic URL
     });
 
+    console.log("SignUp Successfull")
     // Save user to database
     const savedUser = await newUser.save();
     if (!savedUser) {

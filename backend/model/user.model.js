@@ -30,21 +30,12 @@ const userSchema = new Schema(
     },
     gender: {
       type: String,
-      enum: ['female', 'male'],
-      required: true
-  },
-  profilePic: {
-    type: String,
-    default: function() {
-        let genderPrefix = '';
-        if (this.gender === 'male') {
-            genderPrefix = 'boy';
-        } else  {
-            genderPrefix = 'girl';
-        } 
-        return `https://avatar.iran.liara.run/public/${genderPrefix}?username=${this.username}`;
-    }
-}
+      enum: ["female", "male"],
+      required: true,
+    },
+    profilePic: {
+      type: String,
+    },
   },
   {
     timestamps: true,
@@ -71,11 +62,11 @@ userSchema.pre("save", async function (next) {
 });
 
 // Method to validate password
-userSchema.methods.isValidPassword = async function(password) {
+userSchema.methods.isValidPassword = async function (password) {
   try {
-      return await bcrypt.compare(password, this.password);
+    return await bcrypt.compare(password, this.password);
   } catch (error) {
-      throw new Error(error);
+    throw new Error(error);
   }
 };
 

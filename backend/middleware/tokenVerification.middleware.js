@@ -1,4 +1,5 @@
 import jwt from "jsonwebtoken";
+import User from "../model/user.model.js";
 
 const TokenVerified = async (req, res, next) => {
   // Extract token from Authorization header
@@ -21,8 +22,11 @@ const TokenVerified = async (req, res, next) => {
         .json({ error: "Token expired. Please log in again." });
     }
 
-    // Attach decoded token data to request object for further use
-    req.user = decoded;
+    const user = await User.findById(decoded._id).select("-password");
+    if (!user) {
+      return res.status(404).json({ error: "User not Found" });
+    }
+    req.user = user;
 
     // Proceed to next middleware or route handler
     next();

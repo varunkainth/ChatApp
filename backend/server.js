@@ -33,10 +33,14 @@ app.use(helmet());
 
 //Custom Routes Import
 import AuthRoutes from "./routes/auth.routes.js";
+import MessageRoutes from "./routes/message.routes.js";
+import UserRoutes from "./routes/user.routes.js";
 
 // Custom Routes
 
 app.use("/api/auth", AuthRoutes);
+app.use("/api/messages", MessageRoutes);
+app.use("/api/users", UserRoutes);
 
 const PORT = process.env.PORT || 5000;
 
