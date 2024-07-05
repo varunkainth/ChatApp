@@ -9,4 +9,11 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  // server:{
+  //   proxy:{
+  //     "/api":{
+  //       target:"https://potential-space-succotash-j7x4wrqqphpp4v-5000.app.github.dev"
+  //     }
+  //   }
+  // }
 })

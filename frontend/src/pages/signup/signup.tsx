@@ -24,7 +24,8 @@ export function SignUp() {
       const newInputs = { ...prevInputs, [name]: value };
 
       if (name === "firstName" || name === "lastName") {
-        newInputs.fullname = `${newInputs.firstName} ${newInputs.lastName}`.trim();
+        newInputs.fullname =
+          `${newInputs.firstName} ${newInputs.lastName}`.trim();
       }
 
       return newInputs;
@@ -129,7 +130,11 @@ export function SignUp() {
           type="submit"
           disabled={loading}
         >
-          Sign up →
+          {loading ? (
+            <span className="loading loading-spinner"></span>
+          ) : (
+            "Sign up →"
+          )}
           <BottomGradient />
         </button>
 

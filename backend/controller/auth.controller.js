@@ -19,7 +19,6 @@ export const signup = async (req, res) => {
       return res.status(404).json({ error: "User already Exist." });
     }
 
-
     let profilePicUrl = ""; // Initialize profile pic URL
 
     // Handle profile picture upload if provided
@@ -38,17 +37,15 @@ export const signup = async (req, res) => {
       }
 
       profilePicUrl = profilePicUploaded.url; // Set profile pic URL
-    }else{
-      
-        let genderPrefix = '';
-        if (gender === 'male') {
-            genderPrefix = 'boy';
-        } else  {
-            genderPrefix = 'girl';
-        } 
-        profilePicUrl= `https://avatar.iran.liara.run/public/${genderPrefix}?username=${username}`;
+    } else {
+      let genderPrefix = "";
+      if (gender === "male") {
+        genderPrefix = "boy";
+      } else {
+        genderPrefix = "girl";
       }
-    
+      profilePicUrl = `https://avatar.iran.liara.run/public/${genderPrefix}?username=${username}`;
+    }
 
     // Create user in the database
     const newUser = new User({
@@ -60,7 +57,7 @@ export const signup = async (req, res) => {
       profilePic: profilePicUrl, // Assign profile pic URL
     });
 
-    console.log("SignUp Successfull")
+    console.log("SignUp Successfull");
     // Save user to database
     const savedUser = await newUser.save();
     if (!savedUser) {
@@ -123,9 +120,10 @@ export const login = async (req, res) => {
     // If authentication succeeds, generate token and handle further actions (e.g., sending tokens)
     // Example: Generate and send JWT token for authentication
 
-    await tokenCreate(user._id, res);
+    const { Accesstoken, Refreshtoken } = await tokenCreate(user._id, res);
 
     // Return success response
+    console.log("login Succesfull");
     return res.status(200).json({
       message: "Login successful.",
       user: {
@@ -136,6 +134,8 @@ export const login = async (req, res) => {
         gender: user.gender,
         profilePic: user.profilePic,
       },
+      accessToken: Accesstoken,
+      refreshtoken: Refreshtoken,
     });
   } catch (error) {
     // Handle any unexpected errors
@@ -148,13 +148,13 @@ export const login = async (req, res) => {
 
 export const logout = async (req, res) => {
   try {
-     // Clear refresh token cookie
-  res.clearCookie("refreshtoken");
+    // Clear refresh token cookie
+    res.clearCookie("refreshtoken");
 
-  // Clear Authorization header (if applicable)
-  res.setHeader("Authorization", "");
+    // Clear Authorization header (if applicable)
+    res.setHeader("Authorization", "");
 
-  return res.status(200).json({ message: "Logout successful." });
+    return res.status(200).json({ message: "Logout successful." });
   } catch (error) {
     console.log("Logout Error in Contoller", error.message);
     return res.status(500).json({ error: "Internal Server Error" });

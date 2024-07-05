@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import * as z from "zod";
+import { useAuthContext } from "../context/authcontext";
 
 // Define Zod schema for validation
 const signUpSchema = z.object({
@@ -25,6 +26,9 @@ const useSignUp = (inputs?: {
   gender: string;
   password: string;
 }) => {
+
+  const {setAuthUser}=useAuthContext()
+
   const [loading, setLoading] = useState(false);
 
   const signup = async (input: SignUpInput) => {
@@ -43,17 +47,25 @@ const useSignUp = (inputs?: {
         input
       );
       toast.success("Signup successful!");
+      toast.success(response.data.message);
       // Handle successful signup (e.g., redirect or display a success message)
+
+      // localStorage.setItem("Chat_APP", JSON.stringify(response.data));
+
+      setAuthUser(response.data)
+
       console.log(response.data);
     } catch (error) {
       if (axios.isAxiosError(error)) {
+        console.log(error);
+
         // Handle Axios-specific errors
         toast.error(
-          error.response?.data.message || "Signup failed. Please try again."
+          error.response?.data.error || "Signup failed. Please try again."
         );
       } else {
         console.log(error);
-        
+
         toast.error("An unexpected error occurred");
       }
     } finally {

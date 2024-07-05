@@ -23,6 +23,7 @@ const tokenCreate = async (userId, res) => {
     httpOnly: true, // Prevent access via client-side JavaScript
     sameSite: "strict", // Limit cookie to first-party context
   });
+  return{Accesstoken,Refreshtoken};
 };
 
 export default tokenCreate;

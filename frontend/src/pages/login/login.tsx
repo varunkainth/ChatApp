@@ -1,15 +1,26 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { Label } from "../../components/aceternity/ui/label";
 import { Input } from "../../components/aceternity/ui/input";
 import { cn } from "../../lib/utils";
 import { Link } from "react-router-dom";
+import { useLogin } from "../../hooks/useLogin";
 
 export function Login() {
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const { loading, login } = useLogin();
+
+  const [inputs, setInputs] = useState({
+    usernameOrEmail: "",
+    password: "",
+  });
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("Form submitted");
-    // Add authentication logic here
+    await login(inputs);
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputs({ ...inputs, [e.target.name]: e.target.value });
   };
 
   return (
@@ -24,26 +35,47 @@ export function Login() {
 
         <form className="my-8" onSubmit={handleSubmit}>
           <LabelInputContainer className="mb-4">
-            <Label htmlFor="text">Username or Email Address</Label>
-            <Input id="text" placeholder="Username" type="text" />
+            <Label htmlFor="usernameOrEmail">Username or Email Address</Label>
+            <Input
+              id="usernameOrEmail"
+              name="usernameOrEmail"
+              placeholder="Username or Email"
+              type="text"
+              value={inputs.usernameOrEmail}
+              onChange={handleInputChange}
+            />
           </LabelInputContainer>
 
           <LabelInputContainer className="mb-4">
             <Label htmlFor="password">Password</Label>
-            <Input id="password" placeholder="••••••••" type="password" />
+            <Input
+              id="password"
+              name="password"
+              placeholder="••••••••"
+              type="password"
+              value={inputs.password}
+              onChange={handleInputChange}
+            />
           </LabelInputContainer>
 
           <button
             className="bg-gradient-to-br relative group/btn from-black dark:from-zinc-900 dark:to-zinc-900 to-neutral-600 block dark:bg-zinc-800 w-full text-white rounded-md h-10 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset]"
             type="submit"
+            disabled={loading}
           >
-            Login &rarr;
+            {loading ? (
+              <span className="loading loading-spinner"></span>
+            ) : (
+              "Login →"
+            )}
             <BottomGradient />
           </button>
 
           <div className="bg-gradient-to-r from-transparent via-neutral-300 dark:via-neutral-700 to-transparent my-8 h-[1px] w-full" />
 
-          <span>Don't have an account yet? Sign up now to join the ChatApp.</span>
+          <span>
+            Don't have an account yet? Sign up now to join the ChatApp.
+          </span>
           <Link to="/signup" className="mt-3 block">
             <button
               className="bg-gradient-to-br relative group/btn from-black dark:from-zinc-900 dark:to-zinc-900 to-neutral-600 block dark:bg-zinc-800 w-full text-white rounded-md h-10 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset]"
