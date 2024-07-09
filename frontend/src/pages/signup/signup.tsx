@@ -1,13 +1,13 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { Label } from "../../components/aceternity/ui/label";
-import { Input } from "../../components/aceternity/ui/input";
-import { cn } from "../../lib/utils";
-import { DropdownMenuRadioGroupDemo } from "../../components/dropdown";
+import React, {useState} from "react";
+import {Link} from "react-router-dom";
+import {Label} from "../../components/aceternity/ui/label";
+import {Input} from "../../components/aceternity/ui/input";
+import {cn} from "../../lib/utils";
+import {DropdownMenuRadioGroupDemo} from "../../components/dropdown";
 import useSignUp from "../../hooks/useSignup";
 
 export function SignUp() {
-  const { signup, loading } = useSignUp();
+  const {signup, loading} = useSignUp();
   const [inputs, setInputs] = useState({
     fullname: "",
     firstName: "",
@@ -19,9 +19,9 @@ export function SignUp() {
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
+    const {name, value} = e.target;
     setInputs((prevInputs) => {
-      const newInputs = { ...prevInputs, [name]: value };
+      const newInputs = {...prevInputs, [name]: value};
 
       if (name === "firstName" || name === "lastName") {
         newInputs.fullname =
@@ -33,7 +33,7 @@ export function SignUp() {
   };
 
   const handleChangeGender = (gender: string) => {
-    setInputs({ ...inputs, gender });
+    setInputs({...inputs, gender});
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -110,6 +110,13 @@ export function SignUp() {
             option2="female"
             onChangeGender={handleChangeGender}
             selectedGender={inputs.gender}
+          />
+        </LabelInputContainer>
+        <LabelInputContainer className="mb-4">
+          <Label htmlFor="ProfilePic">Profile Picture</Label>
+          <input
+            type="file"
+            className="file-input file-input-bordered w-full max-w-xs"
           />
         </LabelInputContainer>
 

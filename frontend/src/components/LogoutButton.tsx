@@ -7,7 +7,7 @@ export function LogoutButton() {
   return (
     <>
       {!loading ? (
-        <button onClick={logout} className="btn">Button</button>
+        <button onClick={logout} className="btn">Logout</button>
       ) : (
         <span className="loading loading-spinner loading-sm"></span>
       )}

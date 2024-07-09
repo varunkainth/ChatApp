@@ -120,7 +120,7 @@ export const login = async (req, res) => {
     // If authentication succeeds, generate token and handle further actions (e.g., sending tokens)
     // Example: Generate and send JWT token for authentication
 
-    const { Accesstoken, Refreshtoken } = await tokenCreate(user._id, res);
+    const {Refreshtoken } = await tokenCreate(user._id, res);
 
     // Return success response
     console.log("login Succesfull");
@@ -134,7 +134,6 @@ export const login = async (req, res) => {
         gender: user.gender,
         profilePic: user.profilePic,
       },
-      accessToken: Accesstoken,
       refreshtoken: Refreshtoken,
     });
   } catch (error) {

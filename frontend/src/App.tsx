@@ -3,8 +3,9 @@ import { ThemeProvider } from "./components/theme-provider";
 import { Login } from "./pages/login/login";
 import { SignUp } from "./pages/signup/signup";
 import Home from "./pages/home/home";
-import { Toaster } from "react-hot-toast";
 import { useAuthContext } from "./context/authcontext";
+import {Toaster as ToasterShadcn} from "./components/ui/toaster"
+import { Toaster } from "react-hot-toast";
 
 function App() {
   const { authUser } = useAuthContext();
@@ -20,6 +21,7 @@ function App() {
           />
         </Routes>
         <Toaster />
+        <ToasterShadcn />
       </div>
     </ThemeProvider>
   );

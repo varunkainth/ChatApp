@@ -12,18 +12,18 @@ const tokenCreate = async (userId, res) => {
     { _id: userId },
     process.env.JWT_REFRESH_SECRET_KEY,
     {
-      expiresIn: "10d",
+      expiresIn: "1d",
     }
   );
 
   res.setHeader("Authorization", `Bearer ${Accesstoken}`);
   res.cookie("refreshtoken", Refreshtoken, {
-    maxAge: 10 * 24 * 60 * 60 * 1000, // Expired in 10 Days
+    maxAge: 1 * 24 * 60 * 60 * 1000, // Expired in 1 Days
     secure: true, // Only send cookie over HTTPS
     httpOnly: true, // Prevent access via client-side JavaScript
     sameSite: "strict", // Limit cookie to first-party context
   });
-  return{Accesstoken,Refreshtoken};
+  return{Refreshtoken};
 };
 
 export default tokenCreate;
