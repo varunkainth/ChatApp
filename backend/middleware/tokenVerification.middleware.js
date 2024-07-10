@@ -19,7 +19,7 @@ const TokenVerified = async (req, res, next) => {
     const decoded = jwt.verify(token, process.env.JWT_ACCESS_SECRET_KEY);
 
     // Log decoded payload for debugging
-    console.log("Decoded JWT:", decoded);
+    // console.log("Decoded JWT:", decoded);
 
     // Check if token is expired
     if (decoded.exp <= Math.floor(Date.now() / 1000)) {
