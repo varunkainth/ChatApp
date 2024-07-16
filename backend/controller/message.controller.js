@@ -6,6 +6,9 @@ export const SendMessage = async (req, res) => {
     const { message } = req.body;
     const { id: receiverId } = req.params;
     const senderId = req.user._id;
+    console.log("Received message:", message);
+    console.log("Sender ID:", senderId);
+    console.log("Receiver ID:", receiverId);
 
     let Conversations = await Conversation.findOne({
       participants: {
@@ -33,7 +36,7 @@ export const SendMessage = async (req, res) => {
 
     res.status(201).json(newMessage);
   } catch (error) {
-    console.log("Error in SendMessage Controller", error.message);
+    console.log("Error in SendMessage Controller", error);
     return res.status(500).json({ error: "Internal Error" });
   }
 };

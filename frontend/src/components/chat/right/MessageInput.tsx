@@ -7,14 +7,25 @@ const MessageInput: React.FC = () => {
   const { loading, sendMessage } = useSendMessage(); // Custom hook for sending messages
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    console.log("Input changed:", e.target.value); // Log input changes
     setMessage(e.target.value); // Update message state as the user types
   };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (!message.trim()) return; // Ensure message is not empty or whitespace
-    await sendMessage(message); // Call sendMessage function to send the message
-    setMessage(""); // Clear the input field after sending
+    e.preventDefault(); // Prevent default form submission
+    console.log("Form submitted with message:", message); // Log form submission
+
+    if (!message.trim()) {
+      console.log("Message is empty");
+      return; // Ensure message is not empty or whitespace
+    }
+
+    try {
+      await sendMessage(message); // Call sendMessage function to send the message
+      setMessage(""); // Clear the input field after sending
+    } catch (error) {
+      console.error("Error sending message:", error);
+    }
   };
 
   return (
@@ -26,13 +37,18 @@ const MessageInput: React.FC = () => {
           className="flex-1 px-4 py-2 border rounded-lg"
           value={message}
           onChange={handleChange}
+          disabled={loading} // Disable input while loading
         />
         <button
           disabled={loading}
           type="submit"
-          className="ml-4 px-4 py-2 bg-blue-500 text-white rounded-lg"
+          className="ml-4 px-4 py-2 bg-blue-500 text-white rounded-lg flex items-center justify-center"
         >
-          {loading ? <div className="loading loading-spinner"></div> : <SendIcon />}
+          {loading ? (
+            <div className="loading loading-spinner"></div>
+          ) : (
+            <SendIcon />
+          )}
         </button>
       </div>
     </form>

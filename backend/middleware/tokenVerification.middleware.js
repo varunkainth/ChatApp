@@ -7,7 +7,7 @@ const TokenVerified = async (req, res, next) => {
   // const token = authHeader && authHeader.split(" ")[1]; // Bearer <token>
 
   const token = req.header("Authorization")?.replace("Bearer","")
-  // console.log(token);
+  console.log(token);
 
   // Check if token is present
   if (!token) {
@@ -19,7 +19,7 @@ const TokenVerified = async (req, res, next) => {
     const decoded = jwt.verify(token, process.env.JWT_ACCESS_SECRET_KEY);
 
     // Log decoded payload for debugging
-    // console.log("Decoded JWT:", decoded);
+    console.log("Decoded JWT:", decoded);
 
     // Check if token is expired
     if (decoded.exp <= Math.floor(Date.now() / 1000)) {

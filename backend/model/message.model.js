@@ -23,15 +23,15 @@ const messageSchema = new Schema(
   }
 );
 
-messageSchema.pre('save', async function (next) {
-    this.message = encrypt(this.message);
-    next();
-  });
+// messageSchema.pre('save', async function (next) {
+//     this.message = encrypt(this.message);
+//     next();
+//   });
   
- messageSchema.methods.decryptFields = async function () {
-    this.message = decrypt(this.message);
-    return this;
-  };
+//  messageSchema.methods.decryptFields = async function () {
+//     this.message = decrypt(this.message);
+//     return this;
+//   };
 
   const Message = mongoose.model("Message",messageSchema)
   export default Message

@@ -33,7 +33,8 @@ const MainHome: React.FC = () => {
   };
 
   
-
+  console.log(selectedConversation);
+  
   return (
     <div className="flex h-screen w-screen pl-[3.5rem]">
       <div className="w-1/4 bg-gray-200 p-1">

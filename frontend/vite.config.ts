@@ -13,7 +13,7 @@ export default defineConfig({
     port: 3000,
     proxy: {
       "/api": {
-        target: "http://localhost:5000",
+        target: "https://studious-halibut-j49p766x6rx2qrxr-5000.app.github.dev/",
         changeOrigin: true,
         // rewrite: (path) => path.replace(/^\/api/, "/"),
       },
