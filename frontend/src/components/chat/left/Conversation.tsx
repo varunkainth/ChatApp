@@ -7,6 +7,7 @@ type Props = {
   conversation: ConversationType;
   lastIndex: boolean;
   emoji: string;
+  _id?:string
 };
 
 const Conversation: React.FC<Props> = ({ conversation, lastIndex, emoji }) => {
